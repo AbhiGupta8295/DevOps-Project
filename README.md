@@ -1,11 +1,12 @@
 # DevOps-Project
-
+<pre>
 1.Login to root account and create iam user account with administrative access
 2.Create a key pair “devops_01.ppk” in iam user account
 3.Create access keys for iam account add the access_key and secret_key in .tf file
 4.Create project directory
 5.Create main.tf file
 6.Add the content:
+</pre>
       provider "aws" {
         region = "us-east-1"
         access_key = ""
@@ -40,7 +41,7 @@
         EOF
 
       }
-
+<pre>
 7.Open cmd prompt, go to project directory
 8.Run terraform init, plan, apply
 9.Once the ec2 instance gets started, copy its public dns address
@@ -49,5 +50,6 @@
 12.Run the command ‘docker ps’ to check whether docker is running or not
 13.Run git clone git@github.com:AbhiGupta8295/devops_project.git to add the repository in the 	docker.
 14.Move using cd to repository directory. 
-15.Run below command to run the nginx image on docker host on port 8000
-16.docker run -d -p 8000:80 -v ~/<repo-name>:/usr/share/nginx/html --name <your-nginx-name-here> nginx
+15.Run below command to run the nginx image on docker host on port 8000.
+16.docker run -d -p 8000:80 -v ~/<repo-name>:/usr/share/nginx/html --name <your-nginx-name-here> nginx.
+</pre>
