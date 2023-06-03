@@ -1,10 +1,12 @@
 # DevOps-Project
+<pre>
 1.Login to root account and create iam user account with administrative access
 2.Create a key pair “devops_01.ppk” in iam user account
 3.Create access keys for iam account add the access_key and secret_key in .tf file
 4.Create project directory
 5.Create main.tf file
 6.Add the content:
+</pre>
       provider "aws" {
         region = "us-east-1"
         access_key = ""
