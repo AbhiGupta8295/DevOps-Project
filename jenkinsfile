@@ -1,35 +1,16 @@
 pipeline {
   agent any
   
-  parameters {
-    string(name: 'EC2_IP', defaultValue: '', description: 'EC2 instance IP address')
-  }
-  
   stages {
-    stage('Create EC2 Instance') {
-      steps {
-        script {
-          // Launch EC2 instance using AWS CLI
-          sh 'aws ec2 run-instances --image-id ami-0715c1897453cabd1 --count 1 --instance-type t2.micro --key-name devops_01 --security-group-ids sg-0454b7e51120799e6 --tag-specifications \'ResourceType=instance,Tags=[{Key=Name,Value=tfServer}]\' --region us-east-1'
-
-          // Capture the EC2 instance IP address
-          def ec2IP = sh(returnStdout: true, script: 'aws ec2 describe-instances --filters Name=tag:Name,Values=tfServer --query "Reservations[0].Instances[0].PublicIpAddress" --region us-east-1').trim()
-          
-          // Store the EC2 instance IP address as an environment variable
-          env.EC2_IP = ec2IP
-        }
-      }
-    }
-    
     stage('Install Terraform') {
       steps {
         script {
           // Install Terraform on the EC2 instance using the dynamic IP
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'sudo yum install -y yum-utils'"
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'"
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'sudo yum -y install terraform'"
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'sudo mv terraform /usr/local/bin/'"
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'terraform --version'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo yum install -y yum-utils'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo yum -y install terraform'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo mv terraform /usr/local/bin/'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'terraform --version'"
         }
       }
     }
@@ -38,7 +19,7 @@ pipeline {
       steps {
         script {
           // Clone your GitHub repository on the EC2 instance using the dynamic IP
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'git clone https://github.com/AbhiGupta8295/devops_project.git'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'git clone https://github.com/AbhiGupta8295/devops_project.git'"
         }
       }
     }
@@ -47,9 +28,9 @@ pipeline {
       steps {
         script {
           // Run Terraform commands on the EC2 instance using the dynamic IP
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'cd devops_project && terraform init'"
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'cd devops_project && terraform plan'"
-          sh "ssh -i /path/to/key.pem ec2-user@${env.EC2_IP} 'cd devops_project && terraform apply -auto-approve'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'cd devops_project && terraform init'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'cd devops_project && terraform plan'"
+          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'cd devops_project && terraform apply -auto-approve'"
         }
       }
     }
