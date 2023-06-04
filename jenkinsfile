@@ -6,11 +6,11 @@ pipeline {
       steps {
         script {
           // Install Terraform on the EC2 instance using the dynamic IP
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo yum install -y yum-utils'"
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'"
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo yum -y install terraform'"
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'sudo mv terraform /usr/local/bin/'"
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'terraform --version'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'sudo yum install -y yum-utils'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'sudo yum -y install terraform'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'sudo mv terraform /usr/local/bin/'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'terraform --version'"
         }
       }
     }
@@ -19,7 +19,7 @@ pipeline {
       steps {
         script {
           // Clone your GitHub repository on the EC2 instance using the dynamic IP
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'git clone https://github.com/AbhiGupta8295/devops_project.git'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'git clone https://github.com/AbhiGupta8295/devops_project.git'"
         }
       }
     }
@@ -28,9 +28,9 @@ pipeline {
       steps {
         script {
           // Run Terraform commands on the EC2 instance using the dynamic IP
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'cd devops_project && terraform init'"
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'cd devops_project && terraform plan'"
-          sh "ssh -i /./ jenkins2.pem ec2-user@52.91.55.34 'cd devops_project && terraform apply -auto-approve'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'cd devops_project && terraform init'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'cd devops_project && terraform plan'"
+          sh "ssh -i /./ ec2-user@52.91.55.34 'cd devops_project && terraform apply -auto-approve'"
         }
       }
     }
