@@ -1,36 +1,15 @@
 pipeline {
   agent any
-  
+
   stages {
-    stage('Install Terraform') {
+    stage('Terraform Apply') {
       steps {
-        script {
-          // Install Terraform on the EC2 instance using the dynamic IP
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'sudo yum install -y yum-utils'"
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'"
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'sudo yum -y install terraform'"
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'sudo mv terraform /usr/local/bin/'"
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'terraform --version'"
-        }
-      }
-    }
-    
-    stage('Clone GitHub Repo') {
-      steps {
-        script {
-          // Clone your GitHub repository on the EC2 instance using the dynamic IP
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'git clone https://github.com/AbhiGupta8295/devops_project.git'"
-        }
-      }
-    }
-    
-    stage('Run Terraform') {
-      steps {
-        script {
-          // Run Terraform commands on the EC2 instance using the dynamic IP
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'cd devops_project && terraform init'"
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'cd devops_project && terraform plan'"
-          sh "ssh -i /./ jenkinsKeyPair.ppk ec2-user@ 'cd devops_project && terraform apply -auto-approve'"
+        // Execute Terraform commands in the ec2-user home directory
+        dir('/home/ec2-user') {
+          // Execute Terraform commands
+          sh 'terraform init'
+          sh 'terraform plan'
+          sh 'terraform apply -auto-approve'
         }
       }
     }
