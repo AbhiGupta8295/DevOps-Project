@@ -5,7 +5,7 @@ pipeline {
     stage('Terraform Apply') {
       steps {
         // Execute Terraform commands in the ec2-user home directory
-        dir('/home/ec2-user') {
+        dir('/home/ec2-user/devops_project') {
           // Execute Terraform commands
           sh 'terraform init'
           sh 'terraform plan'
