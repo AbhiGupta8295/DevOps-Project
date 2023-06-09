@@ -7,9 +7,9 @@ pipeline {
         // Execute Terraform commands in the ec2-user home directory
         dir('/home/ec2-user/devops_project') {
           // Execute Terraform commands
-          sh 'terraform init'
-          sh 'terraform plan'
-          sh 'terraform apply -auto-approve'
+          ssh -i "jenkinsKeyPair.pem" ec2-user@ec2-34-239-122-155.compute-1.amazonaws.com "terraform init"
+          ssh -i "jenkinsKeyPair.pem" ec2-user@ec2-34-239-122-155.compute-1.amazonaws.com "terraform plan"
+          ssh -i "jenkinsKeyPair.pem" ec2-user@ec2-34-239-122-155.compute-1.amazonaws.com "terraform apply -auto approve"
         }
       }
     }
