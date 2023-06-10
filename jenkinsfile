@@ -1,17 +1,22 @@
-pipeline {
-  agent any
-
-  stages {
-    stage('Terraform Apply') {
-      steps {
-        // Execute Terraform commands in the ec2-user home directory
-        dir('/home/ec2-user/devops_project') {
-          // Execute Terraform commands
-          ssh -i "jenkinsKeyPair.pem" ec2-user@ec2-34-239-122-155.compute-1.amazonaws.com "terraform init"
-          ssh -i "jenkinsKeyPair.pem" ec2-user@ec2-34-239-122-155.compute-1.amazonaws.com "terraform plan"
-          ssh -i "jenkinsKeyPair.pem" ec2-user@ec2-34-239-122-155.compute-1.amazonaws.com "terraform apply -auto approve"
-        }
-      }
+pipeline{
+    agent any
+    tools {
+        terraform 'terraform-11'
     }
-  }
-}
+    stages {
+        stage ('Git Checkout'){
+            steps{
+                git branch: 'main', credentialsId: '', url: 'https://github.com/AbhiGupta8295/devops_project'
+            }
+        }
+        stage ('Terraform init'){
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage ( 'Terraform Apply'){
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+    }
