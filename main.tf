@@ -1,13 +1,13 @@
 provider "aws" {
   region = "us-east-1"
-#   not needed if role has been applied
-#   access_key = "AWS_ACCESS_KEY_ID"
-#   secret_key = "AWS_SECRET_ACCESS_KEY"
+  not needed if role has been applied
+  access_key = "AWS_ACCESS_KEY_ID"
+  secret_key = "AWS_SECRET_ACCESS_KEY"
 }
 
-# variable "name" {
-#     description = "Name the instance on deploy"
-# }
+variable "name" {
+    description = "Name the instance on deploy"
+}
 
 
 
@@ -17,9 +17,9 @@ resource "aws_instance" "devops_01_docker-nginx" {
     key_name = "devops_01"
     vpc_security_group_ids = ["sg-0454b7e51120799e6"]
 
-#     tags = {
-#         Name = "${var.name}"
-#     }
+    tags = {
+        Name = "${var.name}"
+    }
     user_data = <<-EOF
     #!/bin/bash
     set -ex
@@ -27,12 +27,12 @@ resource "aws_instance" "devops_01_docker-nginx" {
     sudo yum install -y yum-utils
     sudo yum install git -y
     sudo yum install docker -y
+    sudo service docker start
+    sudo usermod -a -G docker ec2-user
+    sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    sudo docker pull nginx:latest 
     
   EOF
-#   sudo service docker start
-#     sudo usermod -a -G docker ec2-user
-#     sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-#     sudo chmod +x /usr/local/bin/docker-compose
-#     sudo docker pull nginx:latest 
 
 }
