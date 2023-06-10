@@ -5,9 +5,9 @@ provider "aws" {
 #   secret_key = "AWS_SECRET_ACCESS_KEY"
 }
 
-variable "name" {
-    description = "Name the instance on deploy"
-}
+# variable "name" {
+#     description = "Name the instance on deploy"
+# }
 
 
 
@@ -17,9 +17,9 @@ resource "aws_instance" "devops_01_docker-nginx" {
     key_name = "devops_01"
     vpc_security_group_ids = ["sg-0454b7e51120799e6"]
 
-    tags = {
-        Name = "${var.name}"
-    }
+#     tags = {
+#         Name = "${var.name}"
+#     }
     user_data = <<-EOF
     #!/bin/bash
     set -ex
