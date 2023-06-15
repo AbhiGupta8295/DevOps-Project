@@ -1,4 +1,5 @@
 # DevOps-Project (using terraform only)
+Using terraform for provisioning manually or using jenkins to automate the process
 <pre>
 1.Login to root account and create iam user account with administrative access
 2.Create a key pair “devops_01.ppk” in iam user account
