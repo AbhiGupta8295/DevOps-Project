@@ -52,8 +52,8 @@ Using terraform for provisioning manually or using jenkins to automate the proce
 12.Run the command ‘docker ps’ to check whether docker is running or not
 13.Run git clone git@github.com:AbhiGupta8295/devops_project.git to add the repository in the 	docker.
 14.Move using cd to repository directory. 
-15.Run below command to run the nginx image on docker host on port 8000.
-16.docker run -d -p 8000:80 -v ~/repo-name:/usr/share/nginx/html --name your-nginx-name-here nginx.
+15.Run below command to run the nginx image on docker host on port 8000
+16.docker run -d -p 8000:80 -v ~/repo-name:/usr/share/nginx/html --name your-nginx-name-here nginx
 </pre>
 
 # To run terraform using jenkins pipeline
