@@ -56,7 +56,7 @@ Using terraform for provisioning manually or using jenkins to automate the proce
 16.docker run -d -p 8000:80 -v ~/repo-name:/usr/share/nginx/html --name your-nginx-name-here nginx
 </pre>
 
-# To run terraform using jenkins pipeline
+# Steps to run terraform using jenkins pipeline
 <pre>
 1.Launch an ec2 instance.
 2.Connect using putty.
